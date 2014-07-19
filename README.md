@@ -37,4 +37,4 @@ Repeat for the test datasets.
 
 12) Rename column labels to indicate the values are now averages.
 
-13 Write final tidy dataset to .txt file.
+13) Write final tidy dataset to .txt file.
