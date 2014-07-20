@@ -73,14 +73,28 @@ library(reshape2)
 meltMergedDF <- melt(mergedDF,id=c("Subject.Number","Activity"))
 tidyDF <- dcast(meltMergedDF,Subject.Number + Activity ~ variable,mean)
 
-# rewrite column names for all but 1st two columns
+# Make column names more readable
 
-names(tidyDF)[3:68] <- paste("Mean",names(tidyDF)[3:68])
-
-# fix 'BodyBody' issue with variable
-
-names(tidyDF) <- gsub("BodyBody","Body",names(tidyDF),fixed=TRUE)
+names(tidyDF)[3:68] <- paste("MeanOf",names(tidyDF)[3:68])
+names(tidyDF)[3:68] <- gsub("Acc","Acceleration",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("Mag","Magnitude",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("-","",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("std","StdDev",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("Gyro","Gyroscope",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("mean","Mean",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub(" ","",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("Oft","OfT",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("Off","OfFrequencyDomain",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("BodyBody","Body",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("\\(\\)","",names(tidyDF)[3:68])
 
 # write tidy Dataset
 
-write.table("./data/tidyDF.txt")
+write.table(tidyDF,"./data/tidyDF.txt",row.names=FALSE)
+
+# create codebook files
+
+NewVariables <- names(tidyDF)
+
+write.table(KeepCols,"./data/KeepCols.txt",row.names=FALSE)  # original provided column names
+write.table(NewVariables,"./data/Variables.txt",col.names=FALSE)  # my cleaned column names
