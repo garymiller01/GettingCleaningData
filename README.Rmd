@@ -1,6 +1,9 @@
-GettingCleaningData
-===================
-
+---
+title: "ReadMe"
+author: "garymiller01"
+date: "Saturday, July 19, 2014"
+output: html_document
+---
 
 A brief run-through of my run_analysis.R script.
 
@@ -35,6 +38,8 @@ Repeat for the test datasets.
 
 11) Cast a new, tidy dataset, calculating the mean of each variable as broken out by both subject and activity.
 
-12) Rename column labels to indicate the values are now averages.
+12) Rename columns to indicate the values are now means, and to make more readable.
 
 13) Write final tidy dataset to .txt file.
+
+14) Write files useful for creating codebook to .txt files.
