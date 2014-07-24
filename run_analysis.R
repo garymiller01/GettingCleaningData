@@ -1,4 +1,5 @@
 
+
 # Getting & Cleaning Data - Assignment 1
 
 # download datasets
@@ -28,11 +29,11 @@ y_test <- read.table("./data/UCI HAR Dataset/test/y_test.txt",header=FALSE)
 
 # assign column names
 
-names(subject_train) <- "Subject.Number"
+names(subject_train) <- "SubjectNumber"
 names(X_train) <- Features[,2]  # Feature names
 names(y_train) <- "Activity"
 
-names(subject_test) <- "Subject.Number"
+names(subject_test) <- "SubjectNumber"
 names(X_test) <- Features[,2]  # Feature names
 names(y_test) <- "Activity"
 
@@ -70,23 +71,18 @@ mergedDF$Activity <- mapvalues(mergedDF$Activity,from=ActivityLabels[,1],to=Acti
 
 library(reshape2)
 
-meltMergedDF <- melt(mergedDF,id=c("Subject.Number","Activity"))
-tidyDF <- dcast(meltMergedDF,Subject.Number + Activity ~ variable,mean)
+meltMergedDF <- melt(mergedDF,id=c("SubjectNumber","Activity"))
+tidyDF <- dcast(meltMergedDF,SubjectNumber + Activity ~ variable,mean)
 
 # Make column names more readable
 
 names(tidyDF)[3:68] <- paste("MeanOf",names(tidyDF)[3:68])
-names(tidyDF)[3:68] <- gsub("Acc","Acceleration",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("Mag","Magnitude",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("-","",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("std","StdDev",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("Gyro","Gyroscope",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("mean","Mean",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub(" ","",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("Oft","OfT",names(tidyDF)[3:68],fixed=TRUE)
-names(tidyDF)[3:68] <- gsub("Off","OfFrequencyDomain",names(tidyDF)[3:68],fixed=TRUE)
 names(tidyDF)[3:68] <- gsub("BodyBody","Body",names(tidyDF)[3:68],fixed=TRUE)
 names(tidyDF)[3:68] <- gsub("\\(\\)","",names(tidyDF)[3:68])
+names(tidyDF)[3:68] <- gsub("-","",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("std","StdDev",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub(" ","",names(tidyDF)[3:68],fixed=TRUE)
+names(tidyDF)[3:68] <- gsub("mean","Mean",names(tidyDF)[3:68],fixed=TRUE)
 
 # write tidy Dataset
 
